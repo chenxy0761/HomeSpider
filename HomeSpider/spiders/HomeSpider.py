@@ -1,42 +1,46 @@
 # -*- coding:utf-8 -*-
-import selenium as selenium
-from scrapy import Selector
-from scrapy.linkextractors.sgml import SgmlLinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
+# --*-- coding:utf-8 -*-
+import scrapy
+from scrapy import Request, Selector
+from scrapy.spiders import Spider
+from selenium import webdriver
+from ..items import HomespiderItem
 
-class HomeSpider(CrawlSpider):
-    name = 'home'
-    allowed_domains = ['cnbeta.com']
-    start_urls = ['http://www.jb51.net']
+import sys
 
-    rules = (
-        # Extract links matching 'category.php' (but not matching 'subsection.php')
-        # and follow links from them (since no callback means follow=True by default).
-        Rule(SgmlLinkExtractor(allow=('/articles/.*\.htm', )),
-             callback='parse_page', follow=True),
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
-        # Extract links matching 'item.php' and parse them with the spider's method parse_item
-    )
+
+# 巨潮资讯网--上市农业企业基本信息
+class HomeSpider(Spider):
+    name = 'jghq'
+    start_urls = ['http://www.vegnet.com.cn/Price/List_ar310000_p1.html?marketID=0',
+                  'http://www.vegnet.com.cn/Price/List_ar310000_p2.html?marketID=0',
+                  'http://www.vegnet.com.cn/Price/List_ar310000_p3.html?marketID=0',
+                  'http://www.vegnet.com.cn/Price/List_ar310000_p4.html?marketID=0',
+                  ]
 
     def __init__(self):
-        CrawlSpider.__init__(self)
-        self.verificationErrors = []
-        self.selenium = selenium("localhost", 4444, "*firefox", "http://www.jb51.net")
-        self.selenium.start()
+        self.broswer = webdriver.PhantomJS()
+        self.broswer.set_page_load_timeout(30)
 
-    def __del__(self):
-        self.selenium.stop()
-        print self.verificationErrors
-        CrawlSpider.__del__(self)
-
-
-    def parse_page(self, response):
-        self.log('Hi, this is an item page! %s' % response.url)
+    def parse(self, response):
         sel = Selector(response)
-
-        sel = self.selenium
-        sel.open(response.url)
-        sel.wait_for_page_to_load("30000")
-        import time
-
-        time.sleep(2.5)
+        body = sel.xpath('//div[@class="box"]/div/div/div[@class="pri_k"]/p').extract()
+        item = HomespiderItem()
+        i = 0
+        while i <= len(body):
+            text = sel.xpath('//div[@class="box"]/div/div/div[@class="pri_k"]/p[' + str(
+                i) + ']/span[@class="k_2"]//text()').extract()
+            list = []
+            for ll in text:
+                list.append(str(ll))
+            i = i + 1
+            if len(list) != 0:
+                item['name'] = list[0]
+                item['low_price'] = list[1]
+                item['high_price'] = list[2]
+                item['ave_price'] = list[3]
+                item['unit'] = list[4]
+            yield item
