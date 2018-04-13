@@ -12,7 +12,6 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-# 巨潮资讯网--上市农业企业基本信息
 class HomeSpider(Spider):
     name = 'jghq'
     start_urls = ['http://www.vegnet.com.cn/Price/List_ar310000_p1.html?marketID=0',
@@ -20,10 +19,6 @@ class HomeSpider(Spider):
                   'http://www.vegnet.com.cn/Price/List_ar310000_p3.html?marketID=0',
                   'http://www.vegnet.com.cn/Price/List_ar310000_p4.html?marketID=0',
                   ]
-
-    def __init__(self):
-        self.broswer = webdriver.PhantomJS()
-        self.broswer.set_page_load_timeout(30)
 
     def parse(self, response):
         sel = Selector(response)

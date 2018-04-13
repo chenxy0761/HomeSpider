@@ -17,3 +17,16 @@ class HomespiderItem(scrapy.Item):
     ave_price = scrapy.Field()
     unit = scrapy.Field()
     date = scrapy.Field()
+
+
+class MoviespiderItem(scrapy.Item):
+    movie = scrapy.Field()
+    type = scrapy.Field()
+    length = scrapy.Field()
+    performer = scrapy.Field()
+    country = scrapy.Field()
+    director = scrapy.Field()
+    show = scrapy.Field()
+    language = scrapy.Field()
+
+
