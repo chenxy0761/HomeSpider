@@ -4,9 +4,7 @@
 #
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-from selenium import webdriver
-from scrapy.http import HtmlResponse
-import time
+
 from scrapy import signals
 
 
@@ -71,7 +69,6 @@ class HomespiderDownloaderMiddleware(object):
         return s
 
     def process_request(self, request, spider):
-
         pass
 
     def process_response(self, request, response, spider):

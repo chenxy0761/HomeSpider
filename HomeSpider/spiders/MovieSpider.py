@@ -4,9 +4,8 @@ import scrapy
 import time
 from scrapy import Selector
 from scrapy.spiders import Spider
-from ..items import MoviespiderItem
-
 import sys
+from ..items import MoviespiderItem
 
 reload(sys)
 sys.setdefaultencoding('utf-8')

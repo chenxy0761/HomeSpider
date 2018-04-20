@@ -12,13 +12,13 @@ CaiJia_Sql = """
 # village_name = "二联馨苑"
 # location = '&location=121.292485,31.198543'  # 二联馨苑
 
-village = "zhjy"
-village_name = "中虹家园"
-location = '&location=121.672462,31.28271'  # 中虹家园
+# village = "zhjy"
+# village_name = "中虹家园"
+# location = '&location=121.672462,31.28271'  # 中虹家园
 
-# village = "dxy"
-# village_name = "丁香园"
-# location = '&location=121.415404,31.14585'  # 丁香园
+village = "dxy"
+village_name = "丁香园"
+location = '&location=121.415404,31.14585'  # 丁香园
 
 
 keywords = '&keywords=公交站'

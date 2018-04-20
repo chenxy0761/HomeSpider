@@ -57,24 +57,32 @@ class Dba(object):
             cursor.close()
             db.commit()
 
-    def cux_sql_wechat(self, db, sql, id, date):
+    def cux_sql_base(self, db, sql):
         cursor = db.cursor()
-        Sql = """select * from QXJ.QXJ_YQ_READNUM_DAY where id = '%s' and dta_date = to_date('%s','yyyy-mm-dd')""" % (
-            id, date)
-        cursor.execute(Sql)
-        repetition = cursor.fetchone()
-        if repetition:
-            pass
-        else:
-            cursor.execute(sql)
-            cursor.close()
-            db.commit()
-            pass
+        cursor.execute(sql)
+        cursor.close()
+        db.commit()
 
-    def close(self):
-        self.cursor().connection.commit()
-        self.cursor().close()
-        self.connect().close()
+
+def cux_sql_wechat(self, db, sql, id, date):
+    cursor = db.cursor()
+    Sql = """select * from QXJ.QXJ_YQ_READNUM_DAY where id = '%s' and dta_date = to_date('%s','yyyy-mm-dd')""" % (
+        id, date)
+    cursor.execute(Sql)
+    repetition = cursor.fetchone()
+    if repetition:
+        pass
+    else:
+        cursor.execute(sql)
+        cursor.close()
+        db.commit()
+        pass
+
+
+def close(self):
+    self.cursor().connection.commit()
+    self.cursor().close()
+    self.connect().close()
 
 # if __name__ == "__main__":
 # print len(Dba().query("2017-10-01"))
