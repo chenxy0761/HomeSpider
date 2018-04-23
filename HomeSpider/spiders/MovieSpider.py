@@ -25,16 +25,21 @@ class MovieSpider(Spider):
 
     def parse_item(self, response):
         sell = Selector(response)
+        try:
+            score = sell.xpath('//div[@class="rating_self clearfix"]/strong/text()').extract()[0]
+        except:
+            score = "暂无评分"
         sites = sell.xpath('//div[@id="info"]').extract()[0]
         title = sell.xpath('//div[@id="content"]/h1/span[1]//text()').extract()[0]
         while '<' in sites:
             sites = sites.replace(sites[sites.index('<'):sites.index('>') + 1], "")
         site = sites.replace(" ", "")
-        print(title.split())
+        # print(title.split())
         item = MoviespiderItem()
         item['movie'] = title.strip()
         item['country'] = ""
         item['performer'] = ""
+        item['score'] = str(score)
         for list in site.split('\n'):
             map = list.split(':')
             if map[0] == '导演':
