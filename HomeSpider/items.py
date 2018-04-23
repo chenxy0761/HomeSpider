@@ -28,5 +28,6 @@ class MoviespiderItem(scrapy.Item):
     director = scrapy.Field()
     show = scrapy.Field()
     language = scrapy.Field()
+    score = scrapy.Field()
 
 
