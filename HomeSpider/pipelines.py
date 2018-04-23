@@ -22,8 +22,8 @@ class HomespiderPipeline(object):
                 values('%s', '%s', '%s', '%s', '%s', now())
             """
         self.Movie_Sql = """
-                INSERT INTO HOME_MOVIE(movie,type,length,performer, country, director, `show`,`language`) 
-                values('%s', '%s', '%s', '%s', '%s', '%s','%s','%s')
+                INSERT INTO HOME_MOVIE(movie,type,length,performer, country, director, `show`,`language`,`score`) 
+                values('%s', '%s', '%s', '%s', '%s', '%s','%s','%s','%s')
             """
 
     # pipeline默认调用
@@ -53,7 +53,8 @@ class HomespiderPipeline(object):
                 item['country'],
                 item['director'],
                 item['show'],
-                item['language']
+                item['language'],
+                item['score']
             )
             try:
                 self.ora.cux_sql_base(self.ora.connect(), sql)
